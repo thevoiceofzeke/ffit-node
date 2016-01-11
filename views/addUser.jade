@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}: Add User
+  input(id='newUsername', placeholder='username')
+  input(id='newPassword', placeholder='password')
+  br
+  label(for='isAdmin') Admin?
+  input(id='isAdmin', type='checkbox')
+  br
+  button(id='addUserButton') Add User
+  br
+  button(id='listUsers') Show Users
+  div(class='result')
