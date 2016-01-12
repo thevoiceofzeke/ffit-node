@@ -18,7 +18,11 @@ router.get('/', function(req, res, next) {
 // These will become obsolete upon choosing a front-end technology
 // =========================
 router.get('/addUser', function(req, res, next) {
-	res.render('addUser', { user: req.user });
+	if (req.user.admin) {
+		res.render('addUser', { user: req.user });
+	} else {
+		res.send('You do not have permission to view this page.');
+	}
 });
 router.get('/profile/:user', function(req, res, next) {
   res.render('profile', { title: req.params.user });
