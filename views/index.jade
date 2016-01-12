@@ -1,13 +1,20 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  a(href='/addUser') Go to Add User
-  br
-  br
-  br
-  h3 Log In 
-  button(id='localLogin') Local Login
-  button(id='facebookLogin') Facebook
-  button(id='googleLogin') Google
+  if (!user)
+    h3 Please Log In
+    form(role='form', action="/login",method="post", style='max-width: 300px;')
+      .form-group
+        input.form-control(type='text', name="username", placeholder='Enter Username')
+      .form-group
+        input.form-control(type='password', name="password", placeholder='Password')
+      button.btn.btn-default(type='submit') Submit
+
+    //- a(href="/login") Login
+    //- br
+    //- a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/logout") Logout
+    br
+    a(href='/addUser') Go to Add User

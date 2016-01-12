@@ -10,23 +10,18 @@ var bodyParser    = require('body-parser');
 var morgan        = require('morgan');
 var mongoose      = require('mongoose');
 
-// var passport      = require('passport');
-// var flash         = require('connect-flash');
-// var session       = require('express-session');
+var passport      = require('passport');
+var flash         = require('connect-flash');
+var session       = require('express-session');
+var LocalStrategy = require('passport-local').Strategy;
 
 var db            = require('./models/db');
-var user          = require('./models/user');
-var league        = require('./models/league');
+var User          = require('./models/user');
+var League        = require('./models/league');
 var routes        = require('./routes/index');
 var users         = require('./routes/users');
 
 var app = express();
-
-/*
-  Dependecies added for authentication: 
-    https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
-*/
-// var jwt     = require('jsonwebtoken');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,15 +34,31 @@ app.use(logger('dev'));
 // Use body parser to get info from POST and/or URL parameters
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Use morgan to log requests to the console
 app.use(morgan('dev'));
 
+// ==========================
+// Initialize authorization
+// ==========================
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 app.use('/', routes);
 app.use('/users', users);
+
+// passport config
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -79,5 +90,63 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+// ===========================
+// USER DUMP/CREATION SCRIPT
+// ===========================
+User.find({}, function(err, users) {
+  if (users) {
+    User.remove({}, function(err) {
+      if (err) throw err;
+      console.log('dumping users');
+    });
+    User.register(new User({ username : 'admin', admin : true}), 'admin', function(err, user) {
+        if (err) throw err;
+        console.log('registered user: ' + user.username);
+        user.save(function(err) {
+          if (err) throw err;
+          console.log('Saved user: ' + user.username);
+        });
+    });
+    User.register(new User({ username : 'notAdmin', admin : false}), 'notAdmin', function(err, user) {
+        if (err) throw err;
+        console.log('registered user: ' + user.username);
+        user.save(function(err) {
+          if (err) throw err;
+          console.log('Saved user: ' + user.username);
+        });
+    });
+  }
+});
+
+// User.find({}, function(err, users) {
+//   if (err) throw err;
+//   if (users) {
+//     User.remove({}, function(err) {
+//       if (err) throw err;
+//       console.log('dumping users');
+//     });
+//     var admin = User({
+//       name: 'Admin User',
+//       username: 'admin',
+//       password: 'admin',
+//       admin: true
+//     });
+//     var notAdmin = User({
+//       name: 'Test User',
+//       username: 'notAdmin',
+//       password: 'notAdmin',
+//       admin: false
+//     });
+//     admin.save(function(err) {
+//       if (err) throw err;
+//       console.log('saving user: ' + admin.name);
+//     });
+//     notAdmin.save(function(err) {
+//       if (err) throw err;
+//       console.log('saving user: ' + notAdmin.name);
+//     });
+//   }
+// });
 
 module.exports = app;

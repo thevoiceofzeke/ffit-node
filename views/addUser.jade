@@ -1,13 +1,15 @@
 extends layout
 
 block content
+  if (user)
+    p You are logged in as #{user.username}
+      &nbsp; 
+      a(href="/logout") Logout
+
   h1= title
-  p Welcome to #{title}: Add User
+  p Add new user
   input(id='newUsername', placeholder='username')
   input(id='newPassword', placeholder='password')
-  br
-  label(for='isAdmin') Admin?
-  input(id='isAdmin', type='checkbox')
   br
   button(id='addUserButton') Add User
   br

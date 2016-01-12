@@ -1,12 +1,13 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose 				= require('mongoose');
+var Schema 					= mongoose.Schema;
+var passportLocalMongoose 	= require('passport-local-mongoose');
 
 // Create user schema
-var userSchema = new mongoose.Schema({
-	name: String,
-	username: { type: String, required: true, unique: true },
-	password: { type: String, required: true },
+var User = new Schema({
+	username: String,
+    password: String,
 	admin: Boolean,
+	name: String,
 	leagueMember: [],
 	leagueCommissioner: [],
 	createdDate: Date,
@@ -14,8 +15,7 @@ var userSchema = new mongoose.Schema({
 });
 
 // Add date on every save
-// In future, use this to hash passwords to avoid saving plain text passwords
-userSchema.pre('save', function(next) {
+User.pre('save', function(next) {
 	// Get current date
 	var currentDate = new Date();
 
@@ -29,8 +29,8 @@ userSchema.pre('save', function(next) {
 	next();
 });
 
-// Create model from schema
-var User = mongoose.model('User', userSchema);
+User.plugin(passportLocalMongoose);
+
 
 // Make model available to app
-module.exports = User;
+module.exports = mongoose.model('User', User);

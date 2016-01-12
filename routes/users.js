@@ -20,7 +20,8 @@ router.post('/', function(req, res, next) {
 	var newUser = User({
       name: 'Test User',
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      admin: req.body.admin
     });
 
     newUser.save(function(err) {
@@ -31,29 +32,17 @@ router.post('/', function(req, res, next) {
 	res.send('added user ' + req.body.username + '!');
 });
 
+/* DELETE all users */
+router.delete('/', function(req, res, next) {
+  User.remove({}, function(err) {
+    if (err) throw err;
+    console.log('removed users');
+  });
+});
+
 /*
-
 	FOR ACTIONS THAT CAN BE USED WITH MONGODB:
-		https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
-
+	https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
 */
-
-/* FIND user by username */
-// router.get('/lookup', function(req, res, next) {
-// 	User.find({ username: req.body.username }, function(err, user) {
-// 		if (err) throw err;
-// 		// DO SOMETHING
-// 		res.send('found user: ' + user);
-// 	});
-// });
-
-/* MODIFY a user's username */
-// router.get('/updateusername', function(req, res, next) {
-// 	User.findOneAndUpdate({username: req.body.username}, {username: req.body.newUsername}, function(err, user) {
-// 		if (err) throw err;
-// 		console.log(user);
-// 	});
-// });
-
 
 module.exports = router;

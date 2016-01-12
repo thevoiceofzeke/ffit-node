@@ -33,8 +33,8 @@ $(document).ready(function () {
 
 // INDEX/AUTH PAGE EVENT HANDLERS
   // $('#loginButton').on('click', function() {
-  //     var username = $('#loginUser').val();
-  //     var password = $('#loginPassword').val();
+  //     var username = $('#username').val();
+  //     var password = $('#password').val();
   //     var userData = {
   //       'username': username,
   //       'password': password
