@@ -18,6 +18,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var db            = require('./models/db');
 var User          = require('./models/user');
 var League        = require('./models/league');
+var leagueMember  = require('./models/leagueMember');
 var routes        = require('./routes/index');
 var users         = require('./routes/users');
 
@@ -96,10 +97,12 @@ app.use(function(err, req, res, next) {
 // ===========================
 User.find({}, function(err, users) {
   if (users) {
+  	// dump existing users
     User.remove({}, function(err) {
       if (err) throw err;
       console.log('dumping users');
     });
+    // register admin user
     User.register(new User({ username : 'admin', admin : true}), 'admin', function(err, user) {
         if (err) throw err;
         console.log('registered user: ' + user.username);
@@ -108,6 +111,9 @@ User.find({}, function(err, users) {
           console.log('Saved user: ' + user.username);
         });
     });
+    // assign admin to a league
+    
+    // register non-admin user
     User.register(new User({ username : 'notAdmin', admin : false}), 'notAdmin', function(err, user) {
         if (err) throw err;
         console.log('registered user: ' + user.username);
@@ -118,7 +124,27 @@ User.find({}, function(err, users) {
     });
   }
 });
-
+// ===========================
+// LEAGUE DUMP/CREATION SCRIPT
+// ===========================
+League.find({}, function(err, leagues) {
+  if (leagues) {
+    League.remove({}, function(err) {
+      if (err) throw err;
+      console.log('dumping leagues');
+    });
+    var league = League({
+      name: 'Admin League',
+      format: 'Standard',
+      commissioner: 'admin',
+      leagueMembers: []
+    });
+    league.save(function(err) {
+      if (err) throw err;
+      console.log('Saved league: ' + league.name);
+    });
+  }
+});
 // User.find({}, function(err, users) {
 //   if (err) throw err;
 //   if (users) {

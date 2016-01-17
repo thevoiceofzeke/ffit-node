@@ -69,6 +69,13 @@ router.get('/leagues', function(req, res, next) {
   });
 });
 
+/* GET find league by owner */
+router.get('/leagues/:user', function(req, res, next) {
+	League.find({ commissioner: req.params.user }, function(err, league) {
+		if (err) throw err;
+		res.json(league);
+	});
+});
 /* GET find league by id */
 router.get('/leagues/:id', function(req, res, next) {
 	League.find({ _id: req.params.id }, function(err, league) {
@@ -77,21 +84,28 @@ router.get('/leagues/:id', function(req, res, next) {
 	});
 });
 
+/* GET create league page */
+router.get('/create', function(req, res, next) {
+	res.render('createLeague', { user: req.user });
+});
+/* GET member invite page */
+// router.get('/invite', function(req, res, next) {
+// 	res.render('invite', { user: req.user });
+// })
 /* POST create a new league */
-router.post('/leagues', function(req, res, next) {
-	var newLeague = League({
-      name: 'Test League',
+router.post('/create', function(req, res, next) {
+	var league = League({
+      name: req.body.leagueName,
       format: req.body.format,
-      commissioner: req.body.commissioner,
-      members: req.body.commissioner
+      commissioner: req.body.commissioner
     });
 
-    newLeague.save(function(err) {
+    league.save(function(err) {
       if (err) throw err;
-      console.log('League created!');
+      console.log('League created!\nName: ' + req.body.leagueName + '\nFormat: ' + req.body.format + '\nCommish: ' + req.body.commissioner);
     });
 
-	res.json('Created League: ' + newLeague + '!');
+	res.redirect('/');
 });
 
 // =========================

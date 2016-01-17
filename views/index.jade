@@ -15,6 +15,10 @@ block content
     //- a(href="/register") Register
   if (user)
     p You are currently logged in as #{user.username}
+      &nbsp;
+      a(href='/leagues/#{user.username}') Show my Leagues
     a(href="/logout") Logout
     br
     a(href='/addUser') Go to Add User
+    br
+    a(href='/create') Create a League

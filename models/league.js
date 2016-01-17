@@ -1,19 +1,19 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose 				= require('mongoose');
+var Schema 					= mongoose.Schema;
 
 // Create league schema
-var leagueSchema = new mongoose.Schema({
+var LeagueSchema = Schema({
 	name: { type: String, required: true },
 	format: String,
 	commissioner: String,
 	posts: [],
-	members: [],
+	leagueMembers: [],
 	createdDate: Date,
 	updatedDate: Date
 });
 
 // Add date on every save
-leagueSchema.pre('save', function(next) {
+LeagueSchema.pre('save', function(next) {
 	// Get current date
 	var currentDate = new Date();
 	// Change updated_at field to current date
@@ -24,8 +24,5 @@ leagueSchema.pre('save', function(next) {
 	next();
 });
 
-// Create model from schema
-var League = mongoose.model('League', leagueSchema);
-
 // Make model available to app
-module.exports = League;
+module.exports = mongoose.model('League', LeagueSchema);

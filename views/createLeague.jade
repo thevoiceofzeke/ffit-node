@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h3 Create a League
+  if (!user)
+    p You do not have permission to view this content. Please 
+      a(href='/') log in
+  if (user)
+    p You are currently logged in as #{user.username}
+      &nbsp;
+      a(href="/logout") Logout
+    br
+    form#createLeague(method='POST' action='/create')
+      label(for='leagueName') League Name
+      &nbsp;
+      input#leagueName(type='text' name='leagueName')
+      br
+      label(for='commissioner') Commissioner
+      &nbsp;
+      input#commissioner(name='commissioner' type='text' value='#{user.username}')
+      br
+      label(for='format') Format
+      &nbsp;
+      select#format(name='format')
+        option Standard
+        option Leaderboard
+        option One-on-One
+      br
+      button#submitLeague(type='submit') Create League
