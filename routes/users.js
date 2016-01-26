@@ -8,7 +8,7 @@ var User = require('../models/user');
 var router = express.Router();
 
 //===========================//
-//    /USERS ROUTES    //
+//       /USERS ROUTES       //
 //===========================//
 router.route('/')
   
@@ -92,6 +92,34 @@ router.route('/:user_id')
       });
   });
 
+//===========================//
+//   AUTHENTICATION ROUTES   //
+//===========================//
+router.route('/register')
+  
+    .post(function(req, res) {
+        User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
+            if (err) {
+                return res.render('register', { user : user });
+            }
+            user.save(function(err) {
+                if (err)
+                    res.send(err);
+                console.log('User created!');
+            });
+            passport.authenticate('local')(req, res, function () {
+                res.redirect('/');
+            });
+        });
+    });
+
+router.route('/login')
+    /*
+        Login as user
+    */
+    .post(passport.authenticate('local'), function(req, res) {
+        res.redirect('/');
+    });
 
 /*
 	FOR ACTIONS THAT CAN BE USED WITH MONGODB:
