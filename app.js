@@ -19,6 +19,7 @@ var db            = require('./models/db');
 var User          = require('./models/user');
 var League        = require('./models/league');
 var leagueMember  = require('./models/leagueMember');
+var api 		  = require('./routes/api');
 var routes        = require('./routes/index');
 var users         = require('./routes/users');
 
@@ -54,7 +55,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', api);
+app.use('/api/users', users);
 
 // passport config
 passport.use(new LocalStrategy(User.authenticate()));
@@ -145,6 +147,7 @@ League.find({}, function(err, leagues) {
     });
   }
 });
+
 // User.find({}, function(err, users) {
 //   if (err) throw err;
 //   if (users) {

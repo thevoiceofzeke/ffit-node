@@ -7,38 +7,91 @@ var passport = require('passport');
 var User = require('../models/user');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  User.find({}, function(err, users) {
-  	if (err) throw err;
-  	res.json(users);
+//===========================//
+//    /USERS ROUTES    //
+//===========================//
+router.route('/')
+  
+  /*
+    Get all users
+    Accessed at GET http://localhost:3000/api/users
+  */
+  .get(function(req, res) {
+      User.find({}, function(err, users) {
+        if (err)
+          res.send(err);
+        res.json(users);
+      });
+  })
+
+  /*
+    Create a new user
+    Accessed at POST http://localhost:3000/api/users
+  */
+  .post(function(req, res) {
+    var newUser = User({
+          username: req.body.username,
+          password: req.body.password
+      });
+
+      newUser.save(function(err) {
+          if (err)
+              res.send(err);
+          console.log('User created!');
+      });
+
+      res.json({ message: 'added user ' + req.body.username + '!' });
   });
-});
 
-/* CREATE user */
-router.post('/', function(req, res, next) {
-	var newUser = User({
-      name: 'Test User',
-      username: req.body.username,
-      password: req.body.password,
-      admin: req.body.admin
+//===========================//
+//  /USERS/:USER_ID ROUTES   //
+//===========================//
+router.route('/:user_id')
+
+  /*
+    Get a user by id
+    Accessed at GET http://localhost:3000/api/users/:user_id
+  */
+  .get(function(req, res) {
+    User.findById(req.params.user_id, function(err, user) {
+      if (err)
+        res.send(err);
+      res.json(user);
     });
+  })
+  /*
+    Update a user by id
+    Accessed at PUT http://localhost:3000/api/users/:user_id
+  */
+  .put(function(req, res) {
+    User.findById(req.params.user_id, function(err, user) {
+      if (err)
+        res.send(err);
 
-    newUser.save(function(err) {
-      if (err) throw err;
-      console.log('User created!');
+      user.name = req.body.name;
+      user.username = req.body.username;
+
+      user.save(function(err) {
+        if (err)
+          res.send(err);
+
+        res.json({ message: 'User updated!' });
+      });
     });
+  })
 
-	res.send('added user ' + req.body.username + '!');
-});
-
-/* DELETE all users */
-router.delete('/', function(req, res, next) {
-  User.remove({}, function(err) {
-    if (err) throw err;
-    console.log('removed users');
+  /*
+    Delete user with id
+    Accessed at DELETE http://localhost:3000/api/users/:user_id
+  */
+  .delete(function(req, res) {
+      User.remove({ _id: req.params.user_id }, function(err, user) {
+        if (err)
+          res.send(err);
+        res.json({ message: 'Deleted user: ' + user });
+      });
   });
-});
+
 
 /*
 	FOR ACTIONS THAT CAN BE USED WITH MONGODB:
