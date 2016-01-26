@@ -23,6 +23,9 @@ var api 		  = require('./routes/api');
 var routes        = require('./routes/index');
 var users         = require('./routes/users');
 
+// DEV ENVIRONMENT SETUP
+var setupScript	  =	require('./config/setup');
+
 var app = express();
 
 // view engine setup
@@ -93,89 +96,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-// ===========================
-// USER DUMP/CREATION SCRIPT
-// ===========================
-User.find({}, function(err, users) {
-  if (users) {
-  	// dump existing users
-    User.remove({}, function(err) {
-      if (err) throw err;
-      console.log('dumping users');
-    });
-    // register admin user
-    User.register(new User({ username : 'admin', admin : true}), 'admin', function(err, user) {
-        if (err) throw err;
-        console.log('registered user: ' + user.username);
-        user.save(function(err) {
-          if (err) throw err;
-          console.log('Saved user: ' + user.username);
-        });
-    });
-    // assign admin to a league
-    
-    // register non-admin user
-    User.register(new User({ username : 'notAdmin', admin : false}), 'notAdmin', function(err, user) {
-        if (err) throw err;
-        console.log('registered user: ' + user.username);
-        user.save(function(err) {
-          if (err) throw err;
-          console.log('Saved user: ' + user.username);
-        });
-    });
-  }
-});
-// ===========================
-// LEAGUE DUMP/CREATION SCRIPT
-// ===========================
-League.find({}, function(err, leagues) {
-  if (leagues) {
-    League.remove({}, function(err) {
-      if (err) throw err;
-      console.log('dumping leagues');
-    });
-    var league = League({
-      name: 'Admin League',
-      format: 'Standard',
-      commissioner: 'admin',
-      leagueMembers: []
-    });
-    league.save(function(err) {
-      if (err) throw err;
-      console.log('Saved league: ' + league.name);
-    });
-  }
-});
-
-// User.find({}, function(err, users) {
-//   if (err) throw err;
-//   if (users) {
-//     User.remove({}, function(err) {
-//       if (err) throw err;
-//       console.log('dumping users');
-//     });
-//     var admin = User({
-//       name: 'Admin User',
-//       username: 'admin',
-//       password: 'admin',
-//       admin: true
-//     });
-//     var notAdmin = User({
-//       name: 'Test User',
-//       username: 'notAdmin',
-//       password: 'notAdmin',
-//       admin: false
-//     });
-//     admin.save(function(err) {
-//       if (err) throw err;
-//       console.log('saving user: ' + admin.name);
-//     });
-//     notAdmin.save(function(err) {
-//       if (err) throw err;
-//       console.log('saving user: ' + notAdmin.name);
-//     });
-//   }
-// });
 
 module.exports = app;
