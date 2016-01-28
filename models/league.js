@@ -5,6 +5,7 @@ var Schema 					= mongoose.Schema;
 var LeagueSchema = Schema({
 	name: { type: String, required: true },
 	format: String,
+	preset: String,
 	commissioner: String,
 	posts: [],
 	leagueMembers: [],
