@@ -4,10 +4,19 @@ $(document).ready(function () {
  		$('.result').html('<h3>Users</h3>');
   		$.get( '/api/users', function(data) {
   			for (var i = 0; i < data.length; i++) {
-  				$('.result').append(data[i]._id + ': ' + '<a href="/profile/' + data[i].username + '">' + data[i].username + '</a>');
+  				$('.result').append(data[i]._id + ': ' + '<a href="/profile">' + data[i].username + '</a>');
   				$('.result').append('<br>');
   			}
-  			console.log(data);
+  		});
+  	});	
+
+  	$('#listLeagues').on('click', function() {
+ 		$('.result').html('<h3>Leagues</h3>');
+  		$.get( '/api/leagues', function(data) {
+  			for (var i = 0; i < data.length; i++) {
+  				$('.result').append('Name: ' + data[i].name + '<br>Preset: ' + data[i].preset + '<br>Commish: ' + data[i].commissioner);
+  				$('.result').append('<br><br>');
+  			}
   		});
   	});	
 

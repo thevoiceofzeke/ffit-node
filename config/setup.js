@@ -1,5 +1,7 @@
 var User          = require('../models/user');
 var League        = require('../models/league');
+var Workout        = require('../models/workout');
+var presets		  = require('../presets/presets.json');
 
 // ===========================
 // USER DUMP/CREATION SCRIPT
@@ -57,9 +59,10 @@ var League        = require('../models/league');
 	function initializeLeagues() {
 		var league = League({
 	      name: 'Admin League',
-	      format: 'Standard',
+	      preset: 'ulti-offseason',
 	      commissioner: 'admin',
-	      leagueMembers: []
+	      leagueMembers: ['admin'],
+	      workouts: getPresetWorkouts('ulti-offseason')
 	    });
 	    league.save(function(err) {
 	      if (err) throw err;
@@ -67,3 +70,23 @@ var League        = require('../models/league');
 	    });
 	}
 
+//===========================//
+//  	  JSON PARSING 	     //
+//===========================//
+function getPresetWorkouts(preset) {
+	var workouts = [];
+	for (var i = 0; i < presets.length; i++) {
+		if (presets[i].presetType == preset) {
+			var jsonWorkouts = presets[i].workouts;
+			for (jsonWorkout of jsonWorkouts) {
+				var workout = new Workout();
+				workout.name = jsonWorkout.name;
+				workout.points = jsonWorkout.points;
+				workout.description_long = jsonWorkout.description_long;
+				workout.description_short = jsonWorkout.description_short;
+				workouts.push(workout);
+			}
+		}
+	}
+	return workouts;
+}

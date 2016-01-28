@@ -8,6 +8,7 @@ var LeagueSchema = Schema({
 	commissioner: String,
 	posts: [],
 	leagueMembers: [],
+	workouts: [],
 	createdDate: Date,
 	updatedDate: Date
 });

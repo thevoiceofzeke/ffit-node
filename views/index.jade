@@ -2,7 +2,7 @@ extends layout
 
 block content
   if (!user)
-    h3 Please Log In
+    h3 Please Log In or Register
     form(role='form', action="/api/users/login",method="post", style='max-width: 300px;')
       .form-group
         input.form-control(type='text', name="username", placeholder='Enter Username')
@@ -10,17 +10,16 @@ block content
         input.form-control(type='password', name="password", placeholder='Password')
       button.btn.btn-default(type='submit') Submit
       br
-      a(href="/register") Register
+      br
+      a(href="/register") Register a New User
 
-    //- a(href="/login") Login
-    //- br
-    //- a(href="/register") Register
   if (user)
-    p You are currently logged in as #{user.username}
+    p You are currently logged in as <b>#{user.username}</b>
       &nbsp;
-      a(href='/leagues/#{user.username}') Show my Leagues
-    a(href="/logout") Logout
+      a(href="/logout") Logout
+    a(href='/profile') Show my Leagues
     br
-    a(href='/addUser') Go to Add User
+    a(href='/create') Create a New League
     br
-    a(href='/create') Create a League
+    a(href='/addUser') See all Users and Leagues
+    

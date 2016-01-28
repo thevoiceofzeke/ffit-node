@@ -15,13 +15,18 @@ var flash         = require('connect-flash');
 var session       = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 
+// MODELS
+var presets       = require('./presets/presets'), json;
 var db            = require('./models/db');
 var User          = require('./models/user');
 var League        = require('./models/league');
 var leagueMember  = require('./models/leagueMember');
-var api 		  = require('./routes/api');
+
+// ROUTES
+var api 		      = require('./routes/api');
 var routes        = require('./routes/index');
 var users         = require('./routes/users');
+var leagues       = require('./routes/leagues');
 
 // DEV ENVIRONMENT SETUP
 var setupScript	  =	require('./config/setup');
@@ -48,8 +53,8 @@ app.use(morgan('dev'));
 // Initialize authorization
 // ==========================
 app.use(require('express-session')({
-    secret: 'keyboard cat',
-    resave: false,
+    secret: 'ffit-node',
+    resave: true,
     saveUninitialized: false
 }));
 app.use(passport.initialize());
@@ -60,6 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/api', api);
 app.use('/api/users', users);
+app.use('/api/leagues', leagues);
 
 // passport config
 passport.use(new LocalStrategy(User.authenticate()));

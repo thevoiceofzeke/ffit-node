@@ -121,6 +121,21 @@ router.route('/login')
         res.redirect('/');
     });
 
+router.route('/registernoredirect')
+
+    .post(function(req, res) {
+        User.register(new User({ username : req.body.username }), req.body.password, function(err, user) {
+            if (err) {
+                return res.render('register', { user : user });
+            }
+            user.save(function(err) {
+                if (err)
+                    res.send(err);
+                console.log('User created!');
+            });
+        });
+    });
+
 /*
 	FOR ACTIONS THAT CAN BE USED WITH MONGODB:
 	https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications

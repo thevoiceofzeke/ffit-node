@@ -1,0 +1,24 @@
+{ 
+	"presetType": "triathlon",
+	"workouts": [
+		{
+			"name": "",
+			"points": 1,
+			"description_long": "",
+			"description_short": ""
+		},
+		{
+			"name": "",
+			"points": 1,
+			"description_long": "",
+			"description_short": ""
+		},
+		{
+			"name": "",
+			"points": 1,
+			"description_long": "",
+			"description_short": ""
+		},
+	]
+	
+}
