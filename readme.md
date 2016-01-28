@@ -18,7 +18,7 @@ You can see the current dependencies and their versions in the `ffit-node/packag
 ## Run the Project
 In terminal/command prompt, navigate to the project's root directory and run the following command: `npm start`. The project will start up and continue running until it encounters an error or you close it yourself (pressing `ctrl+c` in the terminal/command prompt).
 
-You can see the project running at [http://localhost:3000]{http://localhost:3000}. 
+You can see the project running at [http://localhost:3000](http://localhost:3000). 
 
 You will be asked to login every time you start the project. The following credentials are available upon start-up:
 
