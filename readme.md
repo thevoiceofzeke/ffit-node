@@ -11,7 +11,7 @@
 2. Clone the project using `$ git clone https://github.com/thevoiceofzeke/ffit-node`
 
 #### First-time Setup
-In your terminal/command prompt, navigate to the project's root directory (`/ffit-node`) and run the following command: `$ npm install`. 
+In your terminal/command prompt, navigate to the project's root directory (`/ffit-node`) and run the following command: ```$ npm install```. 
 
 If you installed Node this command should run successfully and your terminal should go through the rather long process of installing all the project's dependencies. If your install fails, Google the error codes or ask me about it!
 
