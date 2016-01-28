@@ -28,11 +28,11 @@ You can see the project running at [http://localhost:3000](http://localhost:3000
 
 You will be asked to login every time you start the project. The following credentials are available upon start-up:
 
-```**username:** admin
+>**username:** admin
    **password:** admin
 
-   **usernmae:** notAdmin
-   **password:** notAdmin```
+>**usernmae:** notAdmin
+   **password:** notAdmin
 
 You can register as many new users as you like, logout, and log in as other users, but every time the app starts it will wipe the database clean and reset it to only include the two initial users and one league.
 
