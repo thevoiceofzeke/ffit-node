@@ -5,6 +5,11 @@
 
 #### System Requirements
 - Install [Node JS](https://nodejs.org/en/) on your machine.
+- Install [Git](https://git-scm.com/downloads)
+
+Node is a server tool that runs entirely on Javascript and creates a server on your local machine.
+
+Git is a version control tool that you can read a little about [here](http://rogerdudler.github.io/git-guide/).
 
 #### Get the Project
 1. Open terminal (Mac/Linux) or command prompt (Windows) and navigate to the directory where you want to store the project (i.e. `$ cd user/projects`)

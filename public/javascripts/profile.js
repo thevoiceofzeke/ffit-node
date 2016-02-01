@@ -2,7 +2,7 @@ $(document).ready(function () {
 	 
     if ($('.leagues').attr('data-user')) {
         var commish = $('.leagues').attr('data-user');
-        $.get( '/api/leagues/', commish, function(data) {
+        $.get( '/api/leagues/' + commish, function(data) {
             for (var i = 0; i < data.length; i++) {
               console.log(data);
                 $('.leagues').append('Name: ' + data[i].name + '<br>Preset: ' + data[i].preset 

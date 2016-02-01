@@ -93,6 +93,23 @@ router.route('/:user_id')
   });
 
 //===========================//
+//   /:USERNAME ROUTES   //
+//===========================//
+router.route('/:username')
+    
+    /*
+      Get a user by username
+      Accessed at GET http://localhost:3000/api/users/username
+    */
+    .get(function(req, res) {
+      User.find({ username: req.params.username }, function(err, user) {
+        if (err)
+          res.send(err);
+      });
+      res.render('profile', { user: user })
+    });
+
+//===========================//
 //   AUTHENTICATION ROUTES   //
 //===========================//
 router.route('/register')

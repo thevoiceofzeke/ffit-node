@@ -4,7 +4,7 @@ $(document).ready(function () {
  		$('.result').html('<h3>Users</h3>');
   		$.get( '/api/users', function(data) {
   			for (var i = 0; i < data.length; i++) {
-  				$('.result').append(data[i]._id + ': ' + '<a href="/profile">' + data[i].username + '</a>');
+  				$('.result').append(data[i]._id + ': ' + '<a href="/' + data[i].username + '/profile">' + data[i].username + '</a>');
   				$('.result').append('<br>');
   			}
   		});
