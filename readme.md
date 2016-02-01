@@ -4,12 +4,20 @@
 ## Getting Started
 
 #### System Requirements
-- Install [Node JS](https://nodejs.org/en/) on your machine.
+- Install [Node JS](https://nodejs.org/en/)
 - Install [Git](https://git-scm.com/downloads)
 
 Node is a server tool that runs entirely on Javascript and creates a server on your local machine.
 
 Git is a version control tool that you can read a little about [here](http://rogerdudler.github.io/git-guide/).
+
+These are *tools*, not programs. You won't be opening a Git program or running node.exe. Once they're installed, they live on your computer and you'll be using them via the terminal/command line. If you have questions about the installation process, ask me or Noah.
+
+**Worth Noting**: If you've looked at any of the very useful scotch.io tutorials I've linked via FB chat, such as ["Build a RESTful API Using Node and Express 4"](https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4) or ["Easily Develop Node.js and MongoDB Apps with Mongoose"](https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications), you may have noticed that terminal/command line commands are often prefaced by a dollar sign:
+
+> `$ some command`
+
+The dollar sign signifies the start of your command prompt, which looks different for everyone. Mine, for example, looks like `doit-2pk151g3-x:~ dwitter2$`, so the above command would actually look like `doit-2pk151g3-x:~ dwitter2$ some command` on my machine. **TLDR**: Think of the `$` you see in tutorials as a placeholder and ignore it.
 
 #### Get the Project
 1. Open terminal (Mac/Linux) or command prompt (Windows) and navigate to the directory where you want to store the project (i.e. `$ cd user/projects`)
